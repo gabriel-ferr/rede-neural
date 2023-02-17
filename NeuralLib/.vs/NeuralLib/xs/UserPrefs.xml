@@ -1,4 +1,39 @@
 ﻿<Properties>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Objects/Layer.cs">
+    <Files>
+      <File FileName="Class1.cs" Line="15" Column="20" />
+      <File FileName="Objects/Network/NeuralNetwork.cs" Line="21" Column="50" />
+      <File FileName="Structs/Neuron.cs" Line="33" Column="25" />
+      <File FileName="Structs/Synapse.cs" Line="11" Column="1" />
+      <File FileName="Interfaces/IActivateFunction.cs" Line="15" Column="37" />
+      <File FileName="ActivateFunctions/Sigmoid.cs" Line="13" Column="54" />
+      <File FileName="ActivateFunctions/Binary.cs" Line="16" Column="6" />
+      <File FileName="ActivateFunctions/Linear.cs" Line="17" Column="22" />
+      <File FileName="ActivateFunctions/Tanh.cs" Line="17" Column="61" />
+      <File FileName="ActivateFunctions/ReLU.cs" Line="1" Column="1" />
+      <File FileName="Objects/Layer.cs" Line="11" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="NeuralLib" expanded="True">
+            <Node name="NeuralLib" expanded="True">
+              <Node name="ActivateFunctions" expanded="True" />
+              <Node name="Interfaces" expanded="True" />
+              <Node name="Objects" expanded="True">
+                <Node name="Network" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.NeuralLib FirstBuild="True" />
 </Properties>

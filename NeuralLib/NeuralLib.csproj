@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Interfaces\" />
+    <None Remove="Objects\Network\" />
+    <None Remove="ActivateFunctions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Objects\" />
+    <Folder Include="Objects\Network\" />
+    <Folder Include="ActivateFunctions\" />
+  </ItemGroup>
 </Project>
