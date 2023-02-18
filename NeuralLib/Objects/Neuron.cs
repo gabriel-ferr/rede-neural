@@ -12,7 +12,7 @@ public class Neuron
     /// <summary>
     /// Instância um novo neurônio.
     /// </summary>
-    public Neuron(int id, IActivateFunction activateFunction, double bias = 0)
+    public Neuron(int id, IActivateFunction activateFunction, decimal bias = 0)
     {
         this.bias = bias;
         this.id = id;
@@ -26,11 +26,11 @@ public class Neuron
     //  Valor de identificação do neurônio.
     private int id;
     //  Valor de entrada armazenado no neurônio.
-    private double? input = null;
+    private decimal? input = null;
     //  Valor de saída armazenado no neurônio.
-    private double? output = null;
+    private decimal? output = null;
     //  Valor fixo de BIAS.
-    private double bias;
+    private decimal bias;
     //  Função de ativação.
     private IActivateFunction activateFunction;
 
@@ -42,13 +42,13 @@ public class Neuron
     public int Id { get => id; set => id = value; }
 
     /// <summary> Valor de entrada do neurônio. </summary>
-    public double? Input { get => input; set => input = value; }
+    public decimal? Input { get => input; set => input = value; }
 
     /// <summary> Valor de saída do neurônio. </summary>
-    public double? Output { get => output; set => output = value; }
+    public decimal? Output { get => output; set => output = value; }
 
     /// <summary> Valor de saída do neurônio. </summary>
-    public double Bias { get => bias; set => bias = value; }
+    public decimal Bias { get => bias; set => bias = value; }
 
     /// <summary> Função de ativação do neurônio.. </summary>
     public IActivateFunction ActivateFunction { get => activateFunction; set => activateFunction = value; }
@@ -62,7 +62,7 @@ public class Neuron
     /// Esse valor já deve ser multiplicado pelo peso da sinapse!
     /// </summary>
     /// <param name="value">Valor de entrada relacionado ao pulso.</param>
-    public void ReceivePulse (double? value)
+    public void ReceivePulse (decimal? value)
     {
         if (value == null) return;
         if (input == null) input = 0;
@@ -76,7 +76,7 @@ public class Neuron
     public Task<Task> Active (NeuralNetwork network)
     {
         if (input != null)
-            output = activateFunction.Apply((double) input + bias);
+            output = activateFunction.Apply((decimal) input + bias);
         //  Envia o pulso para os neurônios conectados
         return Task.FromResult(network.SendPulse(this));
     }

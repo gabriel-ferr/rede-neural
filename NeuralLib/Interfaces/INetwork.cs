@@ -12,10 +12,10 @@ public interface INetwork<T>
     #region Proprieties
 
     /// <summary> Valor de entrada da rede. </summary>
-    public double?[] Input { get; protected set; }
+    public decimal[] Input { get; protected set; }
 
     /// <summary> Valor de saída da rede. </summary>
-    public double?[] Output { get; protected set; }
+    public decimal[] Output { get; protected set; }
 
     /// <summary> Lista de elementos da rede. </summary>
     public List<T> Elements { get; protected set; }
@@ -33,7 +33,7 @@ public interface INetwork<T>
     /// <param name="sender">ID do objeto que deve enviar a informação.</param>
     /// <param name="receiver">ID do objeto que deve receber a informação.</param>
     /// <param name="weigth">Peso da conexão (se já setado, se não, gera um peso)</param>
-    public void CreateConnection(T sender, T receiver, double? weigth = null);
+    public void CreateConnection(T sender, T receiver, decimal? weigth = null);
 
     #endregion
 }

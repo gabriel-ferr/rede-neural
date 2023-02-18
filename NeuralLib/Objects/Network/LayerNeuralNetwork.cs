@@ -10,9 +10,9 @@ public class LayerNeuralNetwork : INetwork<Layer<NeuralNetwork, Neuron>>
     #region Variables
 #pragma warning disable CS8618 // O campo não anulável precisa conter um valor não nulo ao sair do construtor. Considere declará-lo como anulável.
     //  Valor de entrada da rede.
-    private double?[] input;
+    private decimal?[] input;
     //  Valor de saída da rede.
-    private double?[] output;
+    private decimal?[] output;
 #pragma warning restore CS8618 // O campo não anulável precisa conter um valor não nulo ao sair do construtor. Considere declará-lo como anulável.
                               //  Lista de elementos da rede.
     private readonly List<Layer<NeuralNetwork, Neuron>> layers = new();
@@ -24,10 +24,10 @@ public class LayerNeuralNetwork : INetwork<Layer<NeuralNetwork, Neuron>>
     #region Proprieties
 
     /// <summary> Valor de entrada da rede. </summary>
-    public double?[] Input { get => input; set => input = value; }
+    public decimal?[] Input { get => input; set => input = value; }
 
     /// <summary> Valor de saída da rede. </summary>
-    public double?[] Output { get => output; set => output = value; }
+    public decimal?[] Output { get => output; set => output = value; }
 
     /// <summary> Lista de elementos da rede. (O set está desabilitado). </summary>
     public List<Layer<NeuralNetwork, Neuron>> Elements { get => layers; set { } }
@@ -38,6 +38,15 @@ public class LayerNeuralNetwork : INetwork<Layer<NeuralNetwork, Neuron>>
     #endregion
 
     #region Methods
+
+    /// <summary>
+    /// Reseta a entrada e saída da rede.
+    /// </summary>
+    public void Refresh()
+    {
+        input = Array.Empty<decimal?>();
+        output = Array.Empty<decimal?>();
+    }
 
     /// <summary>
     /// Propaga um pulso na rede de camadas.
@@ -66,7 +75,7 @@ public class LayerNeuralNetwork : INetwork<Layer<NeuralNetwork, Neuron>>
         await PulseNextLayer(inputLayer, outputLayer);
 
         // Pega os valores de saída.
-        List<double?> outputs = new();
+        List<decimal?> outputs = new();
         foreach (Neuron neuron in outputLayer.Elements)
             outputs.Add(neuron.Output);
 
@@ -116,8 +125,10 @@ public class LayerNeuralNetwork : INetwork<Layer<NeuralNetwork, Neuron>>
     /// <param name="sender">ID da camada que deve enviar a informação.</param>
     /// <param name="receiver">ID da camada que deve receber a informação.</param>
     /// <param name="weight">Peso da conexão (se já setado, se não, gera um peso)</param>
-    public void CreateConnection(Layer<NeuralNetwork, Neuron> sender, Layer<NeuralNetwork, Neuron> receiver, double? weight = null)
+    public void CreateConnection(Layer<NeuralNetwork, Neuron> sender, Layer<NeuralNetwork, Neuron> receiver, decimal? weight = null)
     {
+        if (sender.Reference != receiver.Reference) throw new Exception("A rede de referência para as camadas deve ser a mesma.");
+
         //  Verifica se a conexão já existe.
         List<Connection<Layer<NeuralNetwork, Neuron>>> _connections = Connections.FindAll(x => x.Sender == sender);
         _connections = _connections.FindAll(x => x.Receiver == receiver);
@@ -135,6 +146,15 @@ public class LayerNeuralNetwork : INetwork<Layer<NeuralNetwork, Neuron>>
 
         //  Adiciona a conexão.
         Connections.Add(connection);
+
+        //  Cria as conexões entre os neurônios.
+        foreach(Neuron neuronSender in sender.Elements)
+        {
+            foreach (Neuron neuronReceiver in receiver.Elements)
+            {
+                sender.Reference.CreateConnection(neuronSender, neuronReceiver);
+            }
+        }
     }
 
     #endregion

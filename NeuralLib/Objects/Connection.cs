@@ -15,9 +15,7 @@ public class Connection<T>
     //  Elemento que receberá os dados.
     private T receiver;
     //  Peso da conexão.
-    private double weight;
-    //  Tarefa de aprendizagem utilizada na conexão.
-    private Task learningTask;
+    private decimal weight;
 #pragma warning restore CS8618 // O campo não anulável precisa conter um valor não nulo ao sair do construtor. Considere declará-lo como anulável.
 
     #endregion
@@ -31,10 +29,7 @@ public class Connection<T>
     public T Receiver { get => receiver; set => receiver = value; }
 
     /// <summary> Peso da conexão. </summary>
-    public double Weight { get => weight; set => weight = value; }
-
-    /// <summary> Tarefa de aprendizagem. </summary>
-    public Task LearningTask { get => learningTask; set => learningTask = value; }
+    public decimal Weight { get => weight; set => weight = value; }
 
     #endregion
 }

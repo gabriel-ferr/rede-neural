@@ -10,11 +10,13 @@
     <None Remove="Interfaces\" />
     <None Remove="Objects\Network\" />
     <None Remove="ActivateFunctions\" />
+    <None Remove="Utilits\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="Objects\" />
     <Folder Include="Objects\Network\" />
     <Folder Include="ActivateFunctions\" />
+    <Folder Include="Utilits\" />
   </ItemGroup>
 </Project>

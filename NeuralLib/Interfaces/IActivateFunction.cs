@@ -12,5 +12,12 @@ public interface IActivateFunction
     /// </summary>
     /// <param name="input">Entrada da função.</param>
     /// <returns>Resultado do cálculo.</returns>
-    public double Apply(double input);
+    public decimal Apply(decimal input);
+
+    /// <summary>
+    /// Retorna o erro da camada de saída.
+    /// </summary>
+    /// <param name="input">Valor de entrada.</param>
+    /// <param name="e">Erro relativo.</param>
+    public decimal OutputError(decimal input, decimal e);
 }
