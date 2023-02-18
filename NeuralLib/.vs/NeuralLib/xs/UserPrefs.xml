@@ -1,22 +1,22 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Objects/Layer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Objects/Network/LayerNeuralNetwork.cs">
     <Files>
-      <File FileName="Class1.cs" Line="15" Column="20" />
-      <File FileName="Objects/Network/NeuralNetwork.cs" Line="21" Column="50" />
-      <File FileName="Structs/Neuron.cs" Line="33" Column="25" />
-      <File FileName="Structs/Synapse.cs" Line="11" Column="1" />
-      <File FileName="Interfaces/IActivateFunction.cs" Line="15" Column="37" />
-      <File FileName="ActivateFunctions/Sigmoid.cs" Line="13" Column="54" />
-      <File FileName="ActivateFunctions/Binary.cs" Line="16" Column="6" />
+      <File FileName="Objects/Network/NeuralNetwork.cs" Line="28" Column="1" />
+      <File FileName="Objects/Network/LayerNetwork.cs" Line="29" Column="53" />
+      <File FileName="Interfaces/IActivateFunction.cs" Line="15" Column="39" />
+      <File FileName="Objects/Neuron.cs" Line="1" Column="1" />
+      <File FileName="Interfaces/INetwork.cs" Line="18" Column="19" />
+      <File FileName="Objects/Layer.cs" Line="24" Column="22" />
+      <File FileName="ActivateFunctions/Sigmoid.cs" />
+      <File FileName="ActivateFunctions/Binary.cs" />
       <File FileName="ActivateFunctions/Linear.cs" Line="17" Column="22" />
-      <File FileName="ActivateFunctions/Tanh.cs" Line="17" Column="61" />
-      <File FileName="ActivateFunctions/ReLU.cs" Line="1" Column="1" />
-      <File FileName="Objects/Layer.cs" Line="11" Column="1" />
+      <File FileName="ActivateFunctions/Tanh.cs" />
+      <File FileName="ActivateFunctions/ReLU.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -27,6 +27,7 @@
               <Node name="Interfaces" expanded="True" />
               <Node name="Objects" expanded="True">
                 <Node name="Network" expanded="True" />
+                <Node name="Neuron.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -35,5 +36,4 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.NeuralLib FirstBuild="True" />
 </Properties>

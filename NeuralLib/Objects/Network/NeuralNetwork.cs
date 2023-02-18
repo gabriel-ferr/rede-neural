@@ -26,10 +26,12 @@ public class NeuralNetwork : INetwork<Neuron>
     //  Variáveis internas da rede.
     #region Variables
 
+#pragma warning disable CS8625 // Não é possível converter um literal nulo em um tipo de referência não anulável.
     //  Valor de entrada da rede.
-    private double[]? input = null;
-    //  Valor de saída da rede.
-    private double[]? output = null;
+    private double?[] input = null;
+        //  Valor de saída da rede.
+    private double?[] output = null;
+#pragma warning restore CS8625 // Não é possível converter um literal nulo em um tipo de referência não anulável.
     //  Lista de elementos da rede.
     private readonly List<Neuron> neurons = new ();
     //  Lista de sinapses.
@@ -43,10 +45,10 @@ public class NeuralNetwork : INetwork<Neuron>
     #region Proprieties
 
     /// <summary> Valor de entrada da rede. </summary>
-    public double[]? Input { get => input; set => input = value; }
+    public double?[] Input { get => input; set => input = value; }
 
     /// <summary> Valor de saída da rede. </summary>
-    public double[]? Output { get => output; set => output = value; }
+    public double?[] Output { get => output; set => output = value; }
 
     /// <summary> Lista de elementos da rede. (O set está desabilitado). </summary>
     public List<Neuron> Elements { get => neurons; set { } }
@@ -64,29 +66,24 @@ public class NeuralNetwork : INetwork<Neuron>
     /// <param name="sender">ID do neurônio que deve enviar a informação.</param>
     /// <param name="receiver">ID do neurônio que deve receber a informação.</param>
     /// <param name="weigth">Peso da conexão (se já setado, se não, gera um peso)</param>
-    public void CreateConnection (int sender, int receiver, double? weigth = null)
+    public void CreateConnection (Neuron sender, Neuron receiver, double? weigth = null)
     {
         Random rnd = new(Convert.ToInt32(DateTime.Now.Ticks));
 
         //  Gera um novo peso se ele não tiver sido setado.
         if (weigth == null) weigth = rnd.NextDouble();
 
-        //  Pega os respectivos neurônios.
-        Neuron? _sender = neurons.Find(x => x.Id == sender);
-        Neuron? _receiver = neurons.Find(x => x.Id == receiver);
-        if (_sender == null || _receiver == null) return;
-
         //  Verifica se a conexão já existe.
-        List<Connection<Neuron>> _connections = Connections.FindAll(x => x.Sender.Id == sender);
-        _connections = _connections.FindAll(x => x.Receiver.Id == receiver);
+        List<Connection<Neuron>> _connections = Connections.FindAll(x => x.Sender.Id == sender.Id);
+        _connections = _connections.FindAll(x => x.Receiver.Id == receiver.Id);
 
         //  Retorna pois a conexão já existe.
         if (_connections.Count() > 0) return;
 
         //  Cria a conexão.
         Connection<Neuron> connection = new() {
-            Sender = _sender,
-            Receiver = _receiver,
+            Sender = sender,
+            Receiver = receiver,
             Weight = (double) weigth
         };
 
