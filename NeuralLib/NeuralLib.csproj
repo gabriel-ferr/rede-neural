@@ -11,6 +11,7 @@
     <None Remove="Objects\Network\" />
     <None Remove="ActivateFunctions\" />
     <None Remove="Utilits\" />
+    <None Remove="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
@@ -18,5 +19,6 @@
     <Folder Include="Objects\Network\" />
     <Folder Include="ActivateFunctions\" />
     <Folder Include="Utilits\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 </Project>

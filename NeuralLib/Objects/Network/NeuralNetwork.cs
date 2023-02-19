@@ -1,124 +1,53 @@
-﻿
-//  Determina o namespace do código.
-namespace NeuralLib;
+﻿namespace NeuralLib;
 
-/// <summary>
-/// Objeto que representa uma rede de neurônios.
-/// </summary>
 public class NeuralNetwork : INetwork<Neuron>
 {
-    //  Construtores do objeto.
-    #region Constructors
-
-    /// <summary>
-    /// Instância uma nova rede de neurônios.
-    /// </summary>
-    /// <param name="amount">Quantidade de neurônios pertencentes a rede.</param>
-    public NeuralNetwork (int amount, IActivateFunction standerd)
+    public NeuralNetwork ()
     {
-        //  Instância os neurônios da rede.
-        for (int i = 0; i < amount; i++)
-            neurons.Add(new Neuron(i, standerd));
-
-        input = new decimal [1];
-        output = new decimal[1];
+        neurons = new ();
+        synapses = new();
     }
 
-    #endregion
+    private readonly List<Neuron> neurons;
+    private readonly List<Connection<Neuron>> synapses;
 
-    //  Variáveis internas da rede.
-    #region Variables
+    public List<Neuron> Elements { get => neurons; set { throw new NotImplementedException("O método `set` não é válido para este elemento."); } }
+    public List<Connection<Neuron>> Connections { get => synapses; set { throw new NotImplementedException("O método `set` não é válido para este elemento."); } }
 
-    //  Valor de entrada da rede.
-    private decimal[] input;
-        //  Valor de saída da rede.
-    private decimal[] output;
-    //  Lista de elementos da rede.
-    private readonly List<Neuron> neurons = new ();
-    //  Lista de sinapses.
-    private readonly List<Connection<Neuron>> synapses = new ();
-
-    //  Pega um neurônio a partir da index.
-    public Neuron this[int i] { get => neurons[i]; protected set => neurons[i] = value; }
-
-    #endregion
-
-    #region Proprieties
-
-    /// <summary> Valor de entrada da rede. </summary>
-    public decimal[] Input { get => input; set => input = value; }
-
-    /// <summary> Valor de saída da rede. </summary>
-    public decimal[] Output { get => output; set => output = value; }
-
-    /// <summary> Lista de elementos da rede. (O set está desabilitado). </summary>
-    public List<Neuron> Elements { get => neurons; set { } }
-
-    /// <summary> Lista de conexões da rede. (O set está desabilitado). </summary>
-    public List<Connection<Neuron>> Connections { get => synapses; set { } }
-
-    #endregion
-
-    #region Methods
-
-    /// <summary>
-    /// Instância uma nova conexão manual.
-    /// </summary>
-    /// <param name="sender">ID do neurônio que deve enviar a informação.</param>
-    /// <param name="receiver">ID do neurônio que deve receber a informação.</param>
-    /// <param name="weigth">Peso da conexão (se já setado, se não, gera um peso)</param>
-    public void CreateConnection (Neuron sender, Neuron receiver, decimal weigth = 0)
+    public Neuron this[int i]
     {
-        Random rnd = new();
+        get
+        {
+            Neuron? result = neurons.Find(x => x.Id == i);
+            if (result == null) throw new IndexOutOfRangeException("O ID informado no index não existe na matriz de neurônios.");
+            return result;
+        }
 
-        //  Gera um novo peso se ele não tiver sido setado.
-        if (weigth == 0) weigth = (decimal) rnd.NextDouble();
-
-        //  Verifica se a conexão já existe.
-        List<Connection<Neuron>> _connections = Connections.FindAll(x => x.Sender.Id == sender.Id);
-        _connections = _connections.FindAll(x => x.Receiver.Id == receiver.Id);
-
-        //  Retorna pois a conexão já existe.
-        if (_connections.Count > 0) return;
-
-        //  Cria a conexão.
-        Connection<Neuron> connection = new() {
-            Sender = sender,
-            Receiver = receiver,
-            Weight = weigth
-        };
-
-        //  Adiciona a conexão.
-        Connections.Add(connection);
+        set
+        {
+            Neuron? result = neurons.Find(x => x.Id == i);
+            if (result == null) neurons.Add(value);
+            else result = value;
+        }
     }
 
-    /// <summary>
-    /// Envia o pulso pela rede a partir de um neurônio específico.
-    /// </summary>
-    /// <param name="sender">Neurônio que deverá enviar o pulso.</param>
-    /// <returns></returns>
-    public Task SendPulse (Neuron sender)
+    public Task Pulse(Neuron[] senders)
     {
-        //  Pega todas as conexões que o neurônio que vai enviar a informação possuí.
-        List<Connection<Neuron>> _connections = synapses.FindAll(x => x.Sender.Id == sender.Id);
-        //  Propaga o pulso para os neurônios conectados.
-        foreach (Connection<Neuron> connection in _connections)
-            connection.Receiver.ReceivePulse(sender.Output * connection.Weight);
+        for (int i = 0; i < senders.Length; i++)
+        {
+            List<Connection<Neuron>> connections = Connections.FindAll(x => x.Sender == senders[i]);
+            foreach (Connection<Neuron> connection in connections)
+            {
+                //Console.WriteLine("{0} -> {1}: {2}", senders[i].Id, connection.Receiver.Id, senders[i].Output * connection.Weight);
+                connection.Receiver.Receive(senders[i].Output * connection.Weight);
+            }
+        }
 
         return Task.CompletedTask;
     }
 
-    /// <summary>
-    /// Treina a rede neural (é uma função pronta, mas é recomendável fazer a sua própria função de treinamento).
-    /// </summary>
-    /// <returns>Retorna o sucesso quando o treinamento tiver sido concluido.</returns>
-    public Task Train (List<Neuron> output, decimal[] expected, decimal learningRate)
+    public void Refresh()
     {
-        
-
-        //  Finaliza.
-        return Task.CompletedTask;
+        foreach (Neuron neuron in neurons) neuron.Refresh();
     }
-
-    #endregion
 }
