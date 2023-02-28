@@ -36,12 +36,12 @@ static class Program
         {
             double porc = rnd.NextDouble();
             decimal sign = porc > 0.5 ? decimal.One : decimal.MinusOne;
-            neural.Connections.Add(new Connection<Neuron>(neural[0], receiver, Math.Round((decimal)rnd.NextDouble() * (sign / 10000000000000), 20)));
+            neural.Connections.Add(new Connection<Neuron>(neural[0], receiver, Math.Round((decimal)rnd.NextDouble() * (sign / 10000), 20)));
             foreach(Neuron receiver_2 in neural.Elements.FindAll(x => x.Id <= 400 && x.Id > 200))
             {
                 porc = rnd.NextDouble();
                 sign = porc > 0.5 ? decimal.One : decimal.MinusOne;
-                neural.Connections.Add(new Connection<Neuron>(receiver, receiver_2, Math.Round((decimal) rnd.NextDouble() * (sign / 100000000000), 20)));
+                neural.Connections.Add(new Connection<Neuron>(receiver, receiver_2, Math.Round((decimal) rnd.NextDouble() * (sign / 10000), 20)));
             }
         }
 
@@ -49,16 +49,23 @@ static class Program
         {
             double porc = rnd.NextDouble();
             decimal sign = porc > 0.5 ? decimal.One : decimal.MinusOne;
-            neural.Connections.Add(new Connection<Neuron>(receiver, neural[401], Math.Round((decimal)rnd.NextDouble() * (sign / 1000000000000), 20)));
+            neural.Connections.Add(new Connection<Neuron>(receiver, neural[401], Math.Round((decimal)rnd.NextDouble() * (sign / 10000), 20)));
         }
 
         //  Treina a rede
-        int n = 500;
+        int n = 10000;
 
         for (int i = 0; i <= n; i++)
         {
-            decimal[] input = { ((decimal)(Math.PI / 2) / n) * i };
-            decimal expected = (decimal)Math.Sin(((Math.PI / 2) / n) * i);
+
+            decimal angle = 0;
+            do
+            {
+                angle = (decimal)rnd.NextDouble() * 180;
+            } while (angle > 180 || angle < 0); 
+
+            decimal[] input = { angle };
+            decimal expected = (decimal)Math.Sin((Math.PI * (double) angle) / 180.0);
 
             //  Aloca os valores nos neurônios de entrada.
             neural[0].Receive(input[0]);
@@ -122,7 +129,7 @@ static class Program
             foreach (Connection<Neuron> connection in neural.Connections.FindAll(x => x.Receiver.Id > 200 && x.Receiver.Id <= 400))
             {
                 gradient = connection.Receiver.ActivateFunction.GetGradient(next_next_error, connection.Receiver.Output);
-                connection.Weight += (decimal)0.1 * gradient * connection.Sender.Output;
+                connection.Weight += (decimal)0.01 * gradient * connection.Sender.Output;
                 if (!bias_edited) { connection.Receiver.Bias += (decimal)0.0001 * gradient; bias_edited = true; }
             }
 
@@ -160,8 +167,8 @@ static class Program
         for(int i = 0; i <= 100; i++)
         {
             //  Monta a matriz de dados de entrada.
-            decimal[] input = { ((decimal) (Math.PI / 2) / 100) * i };
-            decimal expected = (decimal)Math.Sin(((Math.PI / 2) / 100) * i);
+            decimal[] input = { (180 / 100) * i };
+            decimal expected = (decimal)Math.Sin((Math.PI * (180/100) * i) / 180);
 
             //  Aloca os valores nos neurônios de entrada.
             neural[0].Receive(input[0]);
